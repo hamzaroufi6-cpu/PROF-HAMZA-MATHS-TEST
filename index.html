@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>PROF HAMZA MATHS TEST</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <span class="topbar-icon">📐</span>
+    <span class="topbar-title">PROF HAMZA <b>MATHS TEST</b></span>
+  </div>
+  <div class="topbar-actions">
+    <button id="darkToggle" class="icon-btn" title="Mode sombre">🌙</button>
+    <button id="fullscreenToggle" class="icon-btn" title="Plein écran">⛶</button>
+  </div>
+</header>
+
+<!-- ============ SCREEN: WELCOME ============ -->
+<section id="screen-welcome" class="screen active">
+  <div class="math-bg" aria-hidden="true">
+    <span>∑</span><span>π</span><span>√</span><span>∞</span><span>÷</span><span>×</span>
+    <span>Δ</span><span>∫</span><span>%</span><span>θ</span><span>≈</span><span>±</span>
+  </div>
+  <div class="welcome-card card">
+    <div class="welcome-emblem">📐✏️</div>
+    <h1 class="welcome-title">PROF HAMZA <span>MATHS TEST</span></h1>
+    <p class="welcome-subtitle">Évaluation Diagnostique de Mathématiques</p>
+    <p class="welcome-desc">Un test de positionnement conforme au programme marocain des mathématiques, pour les niveaux 1AC, 2AC et 3AC.</p>
+    <button id="startBtn" class="btn btn-primary btn-lg">Commencer le test</button>
+    <button id="openDashboardBtn" class="link-btn">Espace enseignant</button>
+  </div>
+</section>
+
+<!-- ============ SCREEN: STUDENT FORM ============ -->
+<section id="screen-form" class="screen">
+  <div class="card form-card">
+    <h2 class="section-title">Informations de l'élève</h2>
+    <p class="section-hint">Merci de renseigner tous les champs avant de démarrer.</p>
+
+    <div class="field">
+      <label for="studentName">Nom complet</label>
+      <input type="text" id="studentName" placeholder="Ex : Ahmed El Amrani" autocomplete="off">
+    </div>
+
+    <div class="field">
+      <label for="studentClass">Classe</label>
+      <input type="text" id="studentClass" placeholder="Ex : 2AC - 3" autocomplete="off">
+    </div>
+
+    <div class="field">
+      <label for="studentSchool">Établissement</label>
+      <input type="text" id="studentSchool" placeholder="Ex : Collège Al Massira" autocomplete="off">
+    </div>
+
+    <div class="field">
+      <label for="studentLevel">Niveau</label>
+      <select id="studentLevel">
+        <option value="">-- Choisir un niveau --</option>
+        <option value="1AC">1ère Année Collège (1AC)</option>
+        <option value="2AC">2ème Année Collège (2AC)</option>
+        <option value="3AC">3ème Année Collège (3AC)</option>
+      </select>
+    </div>
+
+    <p id="formError" class="form-error hidden">Veuillez remplir tous les champs pour continuer.</p>
+
+    <div class="form-actions">
+      <button id="backToWelcomeBtn" class="btn btn-ghost">◀ Retour</button>
+      <button id="launchTestBtn" class="btn btn-primary">Démarrer l'évaluation ▶</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCREEN: ASSESSMENT ============ -->
+<section id="screen-assessment" class="screen">
+  <div class="assessment-header">
+    <div class="assessment-meta">
+      <span id="qCounter">Question 1/20</span>
+      <span id="levelBadge" class="badge">1AC</span>
+    </div>
+    <div id="timer" class="timer">20:00</div>
+  </div>
+
+  <div class="progress-track">
+    <div id="progressFill" class="progress-fill"></div>
+  </div>
+
+  <div class="card question-card">
+    <h3 id="questionText" class="question-text">--</h3>
+    <div id="choicesList" class="choices-list"></div>
+  </div>
+
+  <div class="assessment-nav">
+    <button id="prevQBtn" class="btn btn-ghost">◀ Précédent</button>
+    <button id="nextQBtn" class="btn btn-primary">Suivant ▶</button>
+  </div>
+</section>
+
+<!-- ============ SCREEN: REPORT ============ -->
+<section id="screen-report" class="screen">
+  <div class="card report-card" id="reportPrintArea">
+    <div class="report-brand">
+      <span class="topbar-icon">📐</span>
+      <div>
+        <div class="report-brand-title">PROF HAMZA MATHS TEST</div>
+        <div class="report-brand-sub">Rapport d'Évaluation Diagnostique</div>
+      </div>
+    </div>
+
+    <div id="resultAnim" class="result-anim"></div>
+
+    <div class="report-grid">
+      <div><span>Nom :</span><b id="rName"></b></div>
+      <div><span>Établissement :</span><b id="rSchool"></b></div>
+      <div><span>Classe :</span><b id="rClass"></b></div>
+      <div><span>Niveau :</span><b id="rLevel"></b></div>
+      <div><span>Date :</span><b id="rDate"></b></div>
+      <div><span>Temps passé :</span><b id="rTime"></b></div>
+    </div>
+
+    <div class="score-panel">
+      <div class="score-circle" id="scoreCircle">
+        <span id="scorePercent">0%</span>
+      </div>
+      <div class="score-details">
+        <div>Score : <b id="rScore">0/20</b></div>
+        <div class="ok">Bonnes réponses : <b id="rCorrect">0</b></div>
+        <div class="ko">Mauvaises réponses : <b id="rWrong">0</b></div>
+        <div>Niveau de performance : <b id="rPerf">--</b></div>
+      </div>
+    </div>
+
+    <div class="recommend-box">
+      <h4>Recommandations personnalisées</h4>
+      <p id="rRecommend"></p>
+    </div>
+
+    <div id="wrongList" class="wrong-list"></div>
+
+    <p class="motiv-msg" id="motivMsg"></p>
+  </div>
+
+  <div class="report-actions no-print">
+    <button id="printBtn" class="btn btn-ghost">🖨️ Imprimer le rapport</button>
+    <button id="pdfBtn" class="btn btn-ghost">📄 Enregistrer en PDF</button>
+    <button id="restartBtn" class="btn btn-primary">Nouveau test ▶</button>
+  </div>
+</section>
+
+<!-- ============ TEACHER DASHBOARD ============ -->
+<section id="screen-dashboard" class="screen">
+  <div id="dashLoginBox" class="card login-card">
+    <h2 class="section-title">Espace enseignant</h2>
+    <p class="section-hint">Cet espace est protégé par mot de passe.</p>
+    <div class="field">
+      <label for="dashPassword">Mot de passe</label>
+      <input type="password" id="dashPassword" placeholder="Mot de passe">
+    </div>
+    <p id="dashError" class="form-error hidden">Mot de passe incorrect.</p>
+    <div class="form-actions">
+      <button id="dashBackBtn" class="btn btn-ghost">◀ Retour</button>
+      <button id="dashLoginBtn" class="btn btn-primary">Se connecter</button>
+    </div>
+  </div>
+
+  <div id="dashContent" class="dashboard-content hidden">
+    <div class="dashboard-topbar">
+      <h2>Tableau de bord enseignant</h2>
+      <button id="dashLogoutBtn" class="btn btn-ghost">Se déconnecter</button>
+    </div>
+
+    <div class="stat-cards">
+      <div class="stat-card"><span id="statTotal">0</span><label>Tests réalisés</label></div>
+      <div class="stat-card"><span id="statAvg">0%</span><label>Moyenne générale</label></div>
+      <div class="stat-card"><span id="statMax">0%</span><label>Meilleur score</label></div>
+      <div class="stat-card"><span id="statMin">0%</span><label>Score le plus bas</label></div>
+    </div>
+
+    <div class="dash-filters">
+      <input type="text" id="searchName" placeholder="🔎 Rechercher un élève...">
+      <select id="filterLevel">
+        <option value="">Tous les niveaux</option>
+        <option value="1AC">1AC</option>
+        <option value="2AC">2AC</option>
+        <option value="3AC">3AC</option>
+      </select>
+      <input type="text" id="filterClass" placeholder="Filtrer par classe">
+    </div>
+
+    <div class="table-wrap">
+      <table id="resultsTable">
+        <thead>
+          <tr>
+            <th>Nom</th><th>Classe</th><th>Établissement</th><th>Niveau</th>
+            <th>Date</th><th>Score</th><th>%</th><th>Performance</th>
+          </tr>
+        </thead>
+        <tbody id="resultsTbody"></tbody>
+      </table>
+    </div>
+
+    <div class="charts-row">
+      <div class="chart-box">
+        <h4>Moyenne par niveau</h4>
+        <canvas id="chartByLevel" width="300" height="200"></canvas>
+      </div>
+      <div class="chart-box">
+        <h4>Bonnes / mauvaises réponses par question (dernier niveau filtré)</h4>
+        <canvas id="chartByQuestion" width="420" height="200"></canvas>
+      </div>
+    </div>
+
+    <div class="dash-actions">
+      <button id="exportCsvBtn" class="btn btn-ghost">⬇ Exporter CSV</button>
+      <button id="exportJsonBtn" class="btn btn-ghost">⬇ Exporter JSON</button>
+      <button id="exportExcelBtn" class="btn btn-ghost">⬇ Exporter Excel</button>
+      <button id="exportPdfBtn" class="btn btn-ghost">⬇ Exporter PDF</button>
+      <button id="deleteAllBtn" class="btn btn-danger">🗑 Supprimer toutes les données</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONFETTI CANVAS (overlay) ============ -->
+<canvas id="confettiCanvas"></canvas>
+
+<!-- ============ TOAST ============ -->
+<div id="toast" class="toast hidden"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
