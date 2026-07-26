@@ -332,6 +332,30 @@ function initAssessmentNav(){
 }
 
 /* ============================================================
+   GOOGLE FORMS INTEGRATION
+   ============================================================ */
+function sendResultsToGoogleForm(nom, info, score) {
+  const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdfw06T8cosrpCe9YRrwUZTZ_hX632_ywXSJqz3nyy5_Ks0hA/formResponse"; 
+
+  const formData = new FormData();
+  formData.append("entry.689950786", nom);
+  formData.append("entry.909049097", info);
+  formData.append("entry.1797257371", score);
+
+  fetch(formUrl, {
+    method: "POST",
+    mode: "no-cors",
+    body: formData
+  })
+  .then(() => {
+    console.log("Résultats envoyés avec succès à Google Forms!");
+  })
+  .catch((error) => {
+    console.error("Erreur d'envoi Google Forms:", error);
+  });
+}
+
+/* ============================================================
    8. GRADING & REPORT
    ============================================================ */
 function finalizeAssessment(){
@@ -377,6 +401,11 @@ function finalizeAssessment(){
   };
 
   saveResult(result);
+
+  // إرسال النتيجة إلى Google Forms تلقائياً
+  const studentInfo = `${session.student.level} - ${session.student.cls} (${session.student.school})`;
+  const studentScore = `${correctCount}/${total} (${percentage}%)`;
+  sendResultsToGoogleForm(session.student.name, studentInfo, studentScore);
 
   if(percentage >= 50) soundCorrect(); else soundWrong();
   renderReport(result);
